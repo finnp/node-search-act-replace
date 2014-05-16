@@ -2,6 +2,8 @@ aaaaabbbaaa
 aaaaabbbbaaaaa
 aaabbaaa
 aba
+aabbaa
+aabbbaa
 aaaaabbbbbaaaa
 abbba
 abaa

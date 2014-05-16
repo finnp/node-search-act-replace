@@ -1,24 +1,22 @@
 // How should the program work?
 
 var sar = require('./index.js');
+var i = 0;
+sar('./test', /a+b+a+/g, function (match, file, cb) {
 
-sar('./test/test.txt', /a+b+a+/g, function (match, file, cb) {
-  // callback
-  // match should be an array like in regex.exec(string)
+  console.log('Replacing in ' + file);
 
-  // I see possibility for modularity
-  // A program going through the filesystem
-  // isnt that called findit
-
-  if (match[0].length > 3) {
-    cb('neuerwert');
+  if(match[0].length > 4) {
+    i++;
+    if (match[0].length % 2) {
+      cb('<' + i + '>');
+    } else {
+      setTimeout(function () {
+        cb('<' + i + '>');
+      }, 2000);
+    }
   } else {
     cb(false); // no replacement
   }
 
 });
-
-
-// "examplestring 1 with example 1"
-// regex /1/g found 2 times
-// when i start at the back i don't change the indizes of earlier matches

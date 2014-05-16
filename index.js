@@ -35,7 +35,7 @@ function sar(path, regex, cb) {
             if (match.newText) {
               pos = matches[index].index;
               len = matches[index][0].length;
-              text = text.substr(0, pos) + newText + text.substr(pos + len);
+              text = text.substr(0, pos) + match.newText + text.substr(pos + len);
             }
             index--;
             maxIndex--;
