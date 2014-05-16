@@ -1,0 +1,14 @@
+{
+  "name": "search-act-replace",
+  "version": "0.0.0",
+  "description": "Search through file system and replace after callback.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Finn Pauls",
+  "license": "MIT",
+  "devDependencies": {
+    "findit": "~1.2.0"
+  }
+}
