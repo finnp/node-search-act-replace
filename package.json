@@ -12,10 +12,8 @@
   },
   "author": "Finn Pauls",
   "license": "MIT",
-  "devDependencies": {
-    "findit": "~1.2.0"
-  },
   "dependencies": {
-    "ignore": "~2.2.12"
+    "ignore": "~2.2.12",
+    "findit": "~1.2.0"
   }
 }
