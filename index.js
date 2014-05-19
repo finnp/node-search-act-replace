@@ -14,7 +14,6 @@ function sar(root, regex, cb) {
 
   finder.on('directory', function (dir, stat, stop) {
     if (!accepts(dir)) {
-      console.log('ignored folder' + dir);
       stop();
     }
   })
@@ -22,7 +21,6 @@ function sar(root, regex, cb) {
   finder.on('file', function (file, stat) {
 
     if (!accepts(file)) {
-      console.log('ignored file');
       return;
     }
 
