@@ -1,0 +1,7 @@
+# repositories
+.git
+.svn
+
+# modules
+node_modules
+bower_components

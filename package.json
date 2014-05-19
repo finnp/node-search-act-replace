@@ -14,5 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "findit": "~1.2.0"
+  },
+  "dependencies": {
+    "ignore": "~2.2.12"
   }
 }

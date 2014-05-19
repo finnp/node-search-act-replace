@@ -1,10 +1,28 @@
-var findit = require('findit');
 var fs = require('fs');
+var path = require('path');
+var findit = require('findit');
+var ignore = require('ignore');
 
-function sar(path, regex, cb) {
-  var finder = findit(path);
+function sar(root, regex, cb) {
+  var finder = findit(root);
+  var ignored = ignore()
+    .addIgnoreFile(path.join(__dirname, '.sarignore'))
+    .addIgnoreFile(path.join(root, '.sarignore'))
+    .addIgnoreFile(path.join(root, '.gitignore'))
+    .createFilter()
+    ;
+
+  finder.on('directory', function (dir, stat, stop) {
+    if (ignored(dir)) {
+      stop();
+    }
+  })
 
   finder.on('file', function (file, stat) {
+
+    if (ignored(file)) {
+      return;
+    }
 
     fs.readFile(file, 'utf-8', function (err, text) {
 
