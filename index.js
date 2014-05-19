@@ -5,7 +5,7 @@ var ignore = require('ignore');
 
 function sar(root, regex, cb) {
   var finder = findit(root);
-  var ignored = ignore()
+  var accepts = ignore()
     .addIgnoreFile(path.join(__dirname, '.sarignore'))
     .addIgnoreFile(path.join(root, '.sarignore'))
     .addIgnoreFile(path.join(root, '.gitignore'))
@@ -13,14 +13,16 @@ function sar(root, regex, cb) {
     ;
 
   finder.on('directory', function (dir, stat, stop) {
-    if (ignored(dir)) {
+    if (!accepts(dir)) {
+      console.log('ignored folder' + dir);
       stop();
     }
   })
 
   finder.on('file', function (file, stat) {
 
-    if (ignored(file)) {
+    if (!accepts(file)) {
+      console.log('ignored file');
       return;
     }
 
