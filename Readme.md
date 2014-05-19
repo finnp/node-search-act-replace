@@ -24,3 +24,8 @@ sar('./test', /www\.\w+\.com/g, function (match, file, replace) {
   });
 });
 ```
+
+The script will automatically ignore `.git`, `.svn`, `node_modules`,
+and `bower_components` folders (have a look at the `.sarignore` file) as well
+as files specified in the roots `.gitignore` file as well as a custom
+`.sarignore` file in the root folder.
