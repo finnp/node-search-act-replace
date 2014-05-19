@@ -1,9 +1,17 @@
 var fs = require('fs');
 var path = require('path');
+var EventEmitter = require('events').EventEmitter;
 var findit = require('findit');
 var ignore = require('ignore');
 
+util.inherits(sar, EventEmitter);
+
 function sar(root, regex, cb) {
+  if(!(this instanceof sar)) return new sar(options);
+
+  var self = this;
+  var noMoreFiles = false;
+  var openCallbacks = 0;
   var finder = findit(root);
   var accepts = ignore()
     .addIgnoreFile(path.join(__dirname, '.sarignore'))
@@ -11,6 +19,10 @@ function sar(root, regex, cb) {
     .addIgnoreFile(path.join(root, '.gitignore'))
     .createFilter()
     ;
+
+  finder.on('end', function () {
+    noMoreFiles = true;
+  })
 
   finder.on('directory', function (dir, stat, stop) {
     if (!accepts(dir)) {
@@ -38,6 +50,7 @@ function sar(root, regex, cb) {
 
 
       matches.forEach(function (match, index) {
+        openCallbacks++;
         cb(match, file, replacement.bind(this, match, index));
       })
 
@@ -61,6 +74,12 @@ function sar(root, regex, cb) {
         }
         if (maxIndex < 0) {
           fs.writeFile(file, text);
+        }
+
+        // are we done?
+        openCallbacks--;
+        if(noMoreFiles && openCallbacks <= 0) {
+          self.emit('end');
         }
       }
     })
