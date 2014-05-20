@@ -1,8 +1,16 @@
 var fs = require('fs');
-var sar = require('./index.js');
+var path = require('path');
+var sar = require('../index.js');
 var i = 0;
 
-doBackups();
+var backup = doBackups([
+  'test.txt',
+  'test2.txt',
+  'example.js',
+  '.sarignore',
+  'node_modules/test.txt',
+  '.git/test2.txt'
+]);
 
 sar(__dirname, /a+b+a+/g, function (match, file, cb) {
 
@@ -33,28 +41,20 @@ sar(__dirname, /a+b+a+/g, function (match, file, cb) {
 })
 .on('end', function () {
   console.log('OVER');
-  restoreBackups();
+  restoreBackups(backup);
 })
 ;
 
-function doBackups() {
-  var backupFiles = [
-    'test.txt',
-    'test2.txt',
-    'example.js',
-    '.sarignore',
-    'node_modules/test.txt',
-    '.git/text2.txt'
-  ];
-
+function doBackups(backupFiles) {
   var backup = {};
   backupFiles.forEach(function (file) {
-      backup[file] = fs.readFileSync(__dirname + file);
+      backup[file] = fs.readFileSync(path.join(__dirname, file));
   })
+  return backup;
 }
 
-function restoreBackups() {
-  backupFiles.forEach(function (file) {
-    fs.writeFileSync(__dirname + file, backup[file]);
-  })
+function restoreBackups(backup) {
+  for (file in backup) {
+    fs.writeFileSync(path.join(__dirname, file), backup[file]);
+  }
 }

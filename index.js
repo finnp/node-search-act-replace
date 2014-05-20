@@ -12,7 +12,7 @@ function sar(root, regex, cb) {
 
   var self = this;
   var noMoreFiles = false;
-  var openCallbacks = 0;
+  var openFiles = 0;
   var finder = findit(root);
   var accepts = ignore()
     .addIgnoreFile(path.join(__dirname, '.sarignore'))
@@ -40,6 +40,7 @@ function sar(root, regex, cb) {
       return;
     }
 
+    openFiles++;
     self.emit('file', file);
 
     fs.readFile(file, 'utf-8', function (err, text) {
@@ -56,7 +57,6 @@ function sar(root, regex, cb) {
 
 
       matches.forEach(function (match, index) {
-        openCallbacks++;
         cb(match, file, replacement.bind(this, match, index));
       })
 
@@ -80,12 +80,11 @@ function sar(root, regex, cb) {
         }
         if (maxIndex < 0) {
           fs.writeFile(file, text);
-        }
-
-        // are we done?
-        openCallbacks--;
-        if(noMoreFiles && openCallbacks <= 0) {
-          self.emit('end');
+          // are we done?
+          openFiles--;
+          if(noMoreFiles && openFiles <= 0) {
+            self.emit('end');
+          }
         }
       }
     })
