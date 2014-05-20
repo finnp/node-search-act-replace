@@ -86,12 +86,13 @@ function sar(root, regex, cb) {
           }
         }
         if (maxIndex < 0) {
-          fs.writeFile(file, text);
-          // are we done?
-          openFiles--;
-          if(noMoreFiles && openFiles <= 0) {
-            self.emit('end');
-          }
+          fs.writeFile(file, text, function () {
+            // are we done?
+            openFiles--;
+            if(noMoreFiles && openFiles <= 0) {
+              self.emit('end');
+            }
+          });
         }
       }
     })
