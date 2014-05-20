@@ -1,4 +1,4 @@
-# Search-Act-Replace
+# Search-Act-Replace (SAR)
 
 Install with `npm install search-act-replace`.
 
@@ -29,3 +29,39 @@ The script will automatically ignore `.git`, `.svn`, `node_modules`,
 and `bower_components` folders (have a look at the `.sarignore` file) as well
 as files specified in the roots `.gitignore` file as well as a custom
 `.sarignore` file in the root folder.
+
+## Events
+SAR is an Event Emitter.
+It supports the following events:
+### file
+Emitted whenever sar stumbles across a file.
+```javascript
+.on('file', function (file) {
+  // file is the filename
+})
+```
+
+### directory
+Emitted whenever sar stumbles across a directory.
+```javascript
+.on('directory', function (dir) {
+  // dir is the filename
+})
+```
+
+### ignore
+Whenever SAR ignores to match within a file or ignores a directory.
+```javascript
+.on('ignore', function (file) {
+  // file is the filename or foldername
+})
+```
+
+### end
+When everything is done. Meaning that all files are traversed,
+all callbacks finished and all the writing/replacing has been done.
+```javascript
+.on('end', function () {
+  // file is the filename
+})
+```
