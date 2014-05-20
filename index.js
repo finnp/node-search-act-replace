@@ -8,7 +8,7 @@ var ignore = require('ignore');
 util.inherits(sar, EventEmitter);
 
 function sar(root, regex, cb) {
-  if(!(this instanceof sar)) return new sar(options);
+  if(!(this instanceof sar)) return new sar(root, regex, cb);
 
   var self = this;
   var noMoreFiles = false;
