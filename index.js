@@ -53,8 +53,15 @@ function sar(root, regex, cb) {
       }
       regex.lastIndex = 0;
 
-      var maxIndex = matches.length - 1;
+      if(matches.length == 0) {
+        // nothing to do, are we done?
+        openFiles--;
+        if(noMoreFiles && openFiles <= 0) {
+          self.emit('end');
+        }
+      }
 
+      var maxIndex = matches.length - 1;
 
       matches.forEach(function (match, index) {
         cb(match, file, replacement.bind(this, match, index));
