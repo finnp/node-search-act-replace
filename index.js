@@ -27,15 +27,20 @@ function sar(root, regex, cb) {
 
   finder.on('directory', function (dir, stat, stop) {
     if (!accepts(dir)) {
+      self.emit('ignore', dir);
       stop();
     }
+    self.emit('directory', dir);
   })
 
   finder.on('file', function (file, stat) {
 
     if (!accepts(file)) {
+      self.emit('ignore', file);
       return;
     }
+
+    self.emit('file', file);
 
     fs.readFile(file, 'utf-8', function (err, text) {
 
