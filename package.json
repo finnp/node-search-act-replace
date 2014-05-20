@@ -1,6 +1,6 @@
 {
   "name": "search-act-replace",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Search through file system and replace after callback.",
   "main": "index.js",
   "scripts": {
