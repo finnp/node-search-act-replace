@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var findit = require('findit');
 var ignore = require('ignore');

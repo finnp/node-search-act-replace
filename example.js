@@ -19,4 +19,7 @@ sar('./test', /a+b+a+/g, function (match, file, cb) {
     cb(false); // no replacement
   }
 
-});
+})
+.on('end', function () {
+  console.log('Over');
+})
