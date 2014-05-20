@@ -41,7 +41,9 @@ sar(__dirname, /a+b+a+/g, function (match, file, cb) {
 })
 .on('end', function () {
   console.log('OVER');
-  restoreBackups(backup);
+  setTimeout(function () {
+    restoreBackups(backup);
+  }, 3000)
 })
 ;
 
